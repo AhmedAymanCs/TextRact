@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "127347556472",
+    "project_id": "textarct",
+    "storage_bucket": "textarct.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:127347556472:android:defa1cf1b59c36fdba2d8d",
+        "android_client_info": {
+          "package_name": "com.example.textract"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgEllS3rY65pg6F39li0fjTMYSidAjxso"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
