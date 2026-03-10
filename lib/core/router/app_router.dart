@@ -5,7 +5,7 @@ import 'package:textract/core/router/routes.dart';
 import 'package:textract/features/auth/presentation/forget_passoword/presentation/forget_password_screen.dart';
 import 'package:textract/features/auth/presentation/login/presentation/login_screen.dart';
 import 'package:textract/features/auth/presentation/register/presentation/register_screen.dart';
-import 'package:textract/features/history/presentation/shared_widgets.dart';
+import 'package:textract/features/history/presentation/history_screen.dart';
 import 'package:textract/features/home/presentation/home_screen.dart';
 import 'package:textract/features/splash/screens/splash_screen.dart';
 

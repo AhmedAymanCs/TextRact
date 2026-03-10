@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:textract/core/constants/app_constants.dart';
 import 'package:textract/features/auth/data/models/register_prams_model.dart';
 
 abstract class AuthRemoteDataSource {
@@ -33,7 +34,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           password: params.password,
         );
     await FirebaseFirestore.instance
-        .collection('Users')
+        .collection(AppConstants.usersCollectionName)
         .doc(credential.user!.uid)
         .set(params.toMap());
     return credential;

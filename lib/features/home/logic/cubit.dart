@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:textract/features/home/data/models/text_form_model.dart';
+import 'package:textract/core/models/text_form_model.dart';
 import 'package:textract/features/home/data/repository/repo.dart';
 import 'package:textract/features/home/logic/state.dart';
 
@@ -17,7 +17,12 @@ class HomeCubit extends Cubit<HomeState> {
     final pickedImage = await _repository.pickImage(source);
     pickedImage.fold(
       (l) => emit(state.copyWith(status: HomeError(l))),
-      (r) => emit(state.copyWith(file: r)),
+      (r) => emit(
+        state.copyWith(
+          file: r,
+          source: source == ImageSource.camera ? 'Camera' : 'Gallery',
+        ),
+      ),
     );
   }
 
@@ -40,7 +45,6 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   void saveTextInDatabase() {
-    print('Hello from saveTextInDatabase');
     _repository.saveTextInDatabase(
       TextFormModel(
         text: state.textExtracted,

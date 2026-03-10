@@ -4,11 +4,13 @@ import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart
 import 'package:image_picker/image_picker.dart';
 import 'package:textract/core/utils/typedef.dart';
 import 'package:textract/features/home/data/data_source/data_source.dart';
-import 'package:textract/features/home/data/models/text_form_model.dart';
+import 'package:textract/core/models/text_form_model.dart';
 
 abstract class HomeRepository {
+  //local
   ServerResponse<XFile?> pickImage(ImageSource source);
   ServerResponse<String> extractText(File file);
+  //remote
   ServerResponse<Unit> saveTextInDatabase(TextFormModel text);
 }
 
