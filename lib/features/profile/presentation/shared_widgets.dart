@@ -1,9 +1,16 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:textract/core/constants/color_manager.dart';
 import 'package:textract/core/constants/font_manager.dart';
+import 'package:textract/core/constants/image_manager.dart';
+import 'package:textract/core/constants/string_manager.dart';
 import 'package:textract/core/widgets/custom_button.dart';
 import 'package:textract/core/widgets/cutom_form_field.dart';
+import 'package:textract/core/widgets/source_butoon.dart';
 import 'package:textract/features/profile/data/models/update_model.dart';
 import 'package:textract/features/profile/logic/cubit.dart';
 import 'package:textract/features/profile/logic/state.dart';
@@ -173,19 +180,77 @@ class _EditProfileDialogState extends State<EditProfileDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          CustomFormField(hint: 'New Name', controller: _nameController),
-          CustomButton(
-            text: 'Update',
-            onPressed: () => widget.cubit.updateUserData(
-              UpdateModel(name: _nameController.text),
-            ),
+    return BlocBuilder<ProfileCubit, ProfileState>(
+      bloc: widget.cubit,
+      builder: (context, state) {
+        return Dialog(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 30,
+                    vertical: 15,
+                  ),
+                  child: state.file == null
+                      ? Image.asset(
+                          ImageManager.placeholder,
+                          fit: BoxFit.contain,
+                        )
+                      : Image.file(File(state.file!.path), fit: BoxFit.contain),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 40),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: SourceButton(
+                        icon: Icons.camera_alt_rounded,
+                        label: StringManager.camera,
+                        onTap: () => widget.cubit.pickImage(ImageSource.camera),
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: SourceButton(
+                        icon: Icons.photo_library_rounded,
+                        label: StringManager.gallery,
+                        onTap: () =>
+                            widget.cubit.pickImage(ImageSource.gallery),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10.0,
+                  vertical: 20,
+                ),
+                child: CustomFormField(
+                  hint: 'New Name',
+                  controller: _nameController,
+                ),
+              ),
+              CustomButton(
+                text: 'Update',
+                onPressed: () => widget.cubit.updateUserData(
+                  UpdateModel(
+                    name: _nameController.text == ''
+                        ? null
+                        : _nameController.text,
+                    image: state.file == null ? null : File(state.file!.path),
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 15.h),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

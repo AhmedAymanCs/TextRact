@@ -10,6 +10,7 @@ abstract class HomeRepository {
   //local
   ServerResponse<XFile?> pickImage(ImageSource source);
   ServerResponse<String> extractText(File file);
+
   //remote
   ServerResponse<Unit> saveTextInDatabase(TextFormModel text);
 }
@@ -17,6 +18,8 @@ abstract class HomeRepository {
 class HomeRepositoryImpl implements HomeRepository {
   final HomeDataSource _dataSource;
   HomeRepositoryImpl(this._dataSource);
+
+  //local
   @override
   ServerResponse<String> extractText(File file) async {
     try {
@@ -39,6 +42,7 @@ class HomeRepositoryImpl implements HomeRepository {
     }
   }
 
+  //remote
   @override
   ServerResponse<Unit> saveTextInDatabase(TextFormModel text) async {
     try {

@@ -10,10 +10,10 @@ import 'package:textract/core/constants/string_manager.dart';
 import 'package:textract/core/di/service_locator.dart';
 import 'package:textract/core/router/routes.dart';
 import 'package:textract/core/widgets/custom_button.dart';
+import 'package:textract/core/widgets/source_butoon.dart';
 import 'package:textract/features/home/data/repository/repo.dart';
 import 'package:textract/features/home/logic/cubit.dart';
 import 'package:textract/features/home/logic/state.dart';
-import 'package:textract/features/home/presentation/shared_widgets.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

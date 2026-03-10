@@ -94,6 +94,7 @@ void _setupProfileRepositoryLocator() {
       firestore: getIt<FirebaseFirestore>(),
       secureStorageHelper: getIt<SecureStorageHelper>(),
       auth: getIt<FirebaseAuth>(),
+      supabaseClient: getIt<SupabaseClient>(),
     ),
   );
 

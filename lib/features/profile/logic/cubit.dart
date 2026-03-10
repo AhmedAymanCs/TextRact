@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:textract/features/profile/data/models/update_model.dart';
 import 'package:textract/features/profile/data/repository/repo.dart';
 import 'package:textract/features/profile/logic/state.dart';
@@ -6,6 +7,15 @@ import 'package:textract/features/profile/logic/state.dart';
 class ProfileCubit extends Cubit<ProfileState> {
   final ProfileRepository _repository;
   ProfileCubit(this._repository) : super(const ProfileState());
+
+  Future<void> pickImage(ImageSource source) async {
+    // emit(state.copyWith(status: const HomeLoading()));
+    final pickedImage = await _repository.pickImage(source);
+    pickedImage.fold(
+      (l) => emit(state.copyWith(status: ProfileStatus.error)),
+      (r) => emit(state.copyWith(file: r)),
+    );
+  }
 
   Future<void> getUserData() async {
     emit(state.copyWith(status: ProfileStatus.loading));
