@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:textract/core/constants/app_constants.dart';
 import 'package:textract/core/constants/color_manager.dart';
 import 'package:textract/core/constants/font_manager.dart';
 

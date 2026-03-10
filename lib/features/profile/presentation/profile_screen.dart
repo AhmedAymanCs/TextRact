@@ -23,7 +23,7 @@ class ProfilePage extends StatelessWidget {
               label: 'Edit Profile',
               onTap: () {},
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12.h),
             ProfileActionButton(
               icon: Icons.logout_rounded,
               label: 'Logout',
