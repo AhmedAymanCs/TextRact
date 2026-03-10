@@ -11,6 +11,8 @@ import 'package:textract/features/history/data/data_source/data_source.dart';
 import 'package:textract/features/history/data/repository/repo.dart';
 import 'package:textract/features/home/data/data_source/data_source.dart';
 import 'package:textract/features/home/data/repository/repo.dart';
+import 'package:textract/features/profile/data/data_source/data_source.dart';
+import 'package:textract/features/profile/data/repository/repo.dart';
 
 final getIt = GetIt.instance;
 
@@ -21,6 +23,7 @@ void intiSetupLocator() {
   _setupHomeRepositoryLocator();
   _setupHistoryRepositoryLocator();
   _setupSupabaseServiceLocator();
+  _setupProfileRepositoryLocator();
 }
 
 void _setupSecureStorageServiceLocator() {
@@ -83,4 +86,18 @@ Future<void> _setupSupabaseServiceLocator() async {
   await Supabase.initialize(url: url, anonKey: apiKey);
 
   getIt.registerLazySingleton<SupabaseClient>(() => Supabase.instance.client);
+}
+
+void _setupProfileRepositoryLocator() {
+  getIt.registerLazySingleton<ProfileDataSource>(
+    () => ProfileDataSourceImpl(
+      firestore: getIt<FirebaseFirestore>(),
+      secureStorageHelper: getIt<SecureStorageHelper>(),
+      auth: getIt<FirebaseAuth>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<ProfileRepository>(
+    () => ProfileRepositoryImpl(getIt<ProfileDataSource>()),
+  );
 }
