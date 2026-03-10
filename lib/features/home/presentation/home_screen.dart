@@ -127,9 +127,19 @@ class HomePage extends StatelessWidget {
                   ),
                   state.textExtracted == ''
                       ? SizedBox()
-                      : IconButton(
-                          onPressed: () => cubit.copyText(),
-                          icon: Icon(Icons.copy),
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                              onPressed: () => cubit.copyText(),
+                              icon: Icon(Icons.copy),
+                            ),
+                            const SizedBox(width: 20),
+                            IconButton(
+                              onPressed: () => cubit.saveTextInDatabase(),
+                              icon: Icon(Icons.upload_file),
+                            ),
+                          ],
                         ),
                 ],
               ),

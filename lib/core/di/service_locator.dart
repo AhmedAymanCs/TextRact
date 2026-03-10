@@ -50,7 +50,9 @@ void _setupFirestoreServiceLocator() {
 }
 
 void _setupHomeRepositoryLocator() {
-  getIt.registerLazySingleton<HomeDataSource>(() => HomeDataSourceImpl());
+  getIt.registerLazySingleton<HomeDataSource>(
+    () => HomeDataSourceImpl(getIt<FirebaseFirestore>()),
+  );
   getIt.registerLazySingleton<HomeRepository>(
     () => HomeRepositoryImpl(getIt<HomeDataSource>()),
   );

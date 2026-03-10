@@ -5,21 +5,29 @@ class HomeState extends Equatable {
   final HomeStatus status;
   final XFile? file;
   final String textExtracted;
+  final String source;
   const HomeState({
     this.status = const HomeInitial(),
     this.file,
     this.textExtracted = '',
+    this.source = '',
   });
-  HomeState copyWith({HomeStatus? status, XFile? file, String? textExtracted}) {
+  HomeState copyWith({
+    HomeStatus? status,
+    XFile? file,
+    String? textExtracted,
+    String? source,
+  }) {
     return HomeState(
       status: status ?? this.status,
       file: file ?? this.file,
       textExtracted: textExtracted ?? this.textExtracted,
+      source: source ?? this.source,
     );
   }
 
   @override
-  List<Object?> get props => [status, file, textExtracted];
+  List<Object?> get props => [status, file, textExtracted, source];
 }
 
 abstract class HomeStatus extends Equatable {
