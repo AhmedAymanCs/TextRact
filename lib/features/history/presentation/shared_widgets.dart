@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:textract/core/constants/color_manager.dart';
+import 'package:textract/core/constants/font_manager.dart';
 import 'package:textract/core/models/text_form_model.dart';
 
 class HistoryItem extends StatelessWidget {
@@ -27,7 +28,7 @@ class HistoryItem extends StatelessWidget {
               const SizedBox(width: 6),
               Text(
                 item.source,
-                style: const TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeightManager.bold),
               ),
               const Spacer(),
               Text(
