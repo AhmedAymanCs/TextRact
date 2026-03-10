@@ -32,4 +32,5 @@ class StringManager {
   static const String extract = 'Extract';
   static const String history = 'History';
   static const String profile = 'Profile';
+  static const String notextracted = 'No text extracted';
 }

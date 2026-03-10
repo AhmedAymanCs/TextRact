@@ -1,4 +1,3 @@
-// lib/utils/app_theme.dart
 import 'package:flutter/material.dart';
 import 'package:textract/core/constants/color_manager.dart';
 
@@ -60,7 +59,6 @@ class AppTheme {
     cardTheme: CardThemeData(
       color: ColorManager.backgroundWhite,
       elevation: 4,
-      shadowColor: ColorManager.textPrimary.withOpacity(0.08),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
     ),
   );
