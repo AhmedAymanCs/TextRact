@@ -5,6 +5,8 @@ import 'package:get_it/get_it.dart';
 import 'package:textract/core/database/local/secure_storage/secure_storage_helper.dart';
 import 'package:textract/features/auth/data/data_source/auth_data_source.dart';
 import 'package:textract/features/auth/data/repository/auth_repository.dart';
+import 'package:textract/features/home/data/data_source/data_source.dart';
+import 'package:textract/features/home/data/repository/repo.dart';
 
 final getIt = GetIt.instance;
 
@@ -12,6 +14,7 @@ void intiSetupLocator() {
   _setupSecureStorageServiceLocator();
   _setupAuthRepositoryLocator();
   _setupFirestoreServiceLocator();
+  _setupHomeRepositoryLocator();
 }
 
 void _setupSecureStorageServiceLocator() {
@@ -43,5 +46,12 @@ void _setupAuthRepositoryLocator() {
 void _setupFirestoreServiceLocator() {
   getIt.registerLazySingleton<FirebaseFirestore>(
     () => FirebaseFirestore.instance,
+  );
+}
+
+void _setupHomeRepositoryLocator() {
+  getIt.registerLazySingleton<HomeDataSource>(() => HomeDataSourceImpl());
+  getIt.registerLazySingleton<HomeRepository>(
+    () => HomeRepositoryImpl(getIt<HomeDataSource>()),
   );
 }
