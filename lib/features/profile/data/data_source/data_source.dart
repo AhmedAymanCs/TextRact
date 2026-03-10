@@ -5,9 +5,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:textract/core/constants/app_constants.dart';
 import 'package:textract/core/database/local/secure_storage/secure_storage_helper.dart';
 import 'package:textract/core/models/user_model.dart';
+import 'package:textract/features/profile/data/models/update_model.dart';
 
 abstract class ProfileDataSource {
   Future<UserModel> getUserData();
+  Future<void> updateUserData(UpdateModel data);
 }
 
 class ProfileDataSourceImpl implements ProfileDataSource {
@@ -34,5 +36,13 @@ class ProfileDataSourceImpl implements ProfileDataSource {
           .get();
       return UserModel.fromJson(response.data()!);
     }
+  }
+
+  @override
+  Future<void> updateUserData(UpdateModel data) async {
+    await firestore
+        .collection(AppConstants.usersCollectionName)
+        .doc(auth.currentUser!.uid)
+        .update(data.toJson());
   }
 }

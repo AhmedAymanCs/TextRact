@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:textract/features/profile/data/models/update_model.dart';
 import 'package:textract/features/profile/data/repository/repo.dart';
 import 'package:textract/features/profile/logic/state.dart';
 
@@ -12,6 +13,15 @@ class ProfileCubit extends Cubit<ProfileState> {
     response.fold(
       (l) => emit(state.copyWith(status: ProfileStatus.error)),
       (r) => emit(state.copyWith(user: r, status: ProfileStatus.success)),
+    );
+  }
+
+  Future<void> updateUserData(UpdateModel data) async {
+    emit(state.copyWith(status: ProfileStatus.loading));
+    final response = await _repository.updateUserData(data);
+    response.fold(
+      (l) => emit(state.copyWith(status: ProfileStatus.error)),
+      (r) => emit(state.copyWith(status: ProfileStatus.success)),
     );
   }
 }
