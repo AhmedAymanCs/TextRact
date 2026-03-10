@@ -24,6 +24,10 @@ class HomePage extends StatelessWidget {
       create: (context) => HomeCubit(getIt<HomeRepository>()),
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.person_2_outlined),
+            onPressed: () => Navigator.pushNamed(context, Routes.profile),
+          ),
           title: const Text(StringManager.appName),
           centerTitle: true,
           actions: [

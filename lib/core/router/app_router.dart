@@ -7,6 +7,7 @@ import 'package:textract/features/auth/presentation/login/presentation/login_scr
 import 'package:textract/features/auth/presentation/register/presentation/register_screen.dart';
 import 'package:textract/features/history/presentation/history_screen.dart';
 import 'package:textract/features/home/presentation/home_screen.dart';
+import 'package:textract/features/profile/presentation/profile_screen.dart';
 import 'package:textract/features/splash/screens/splash_screen.dart';
 
 class AppRouter {
@@ -27,7 +28,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => HomePage());
       case Routes.history:
         return MaterialPageRoute(builder: (_) => const HistoryPage());
-
+      case Routes.profile:
+        return MaterialPageRoute(builder: (_) => const ProfilePage());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
