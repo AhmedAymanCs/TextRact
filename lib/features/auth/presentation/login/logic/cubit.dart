@@ -12,13 +12,13 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   void changeRememberMe(bool value) {
-    emit(LoginState(rememberMe: value));
+    emit(state.copyWith(rememberMe: value));
   }
 
   Future<void> login({required String email, required String password}) async {
     final bool isValid = validator(email: email, password: password);
     if (isValid) {
-      emit(LoginState(status: const FormLoading()));
+      emit(state.copyWith(status: FormLoading()));
       final userCredential = await _authRepository.login(
         email: email,
         password: password,
@@ -32,10 +32,10 @@ class LoginCubit extends Cubit<LoginState> {
 
   bool validator({required String email, required String password}) {
     if (email.trim().isEmpty) {
-      emit(LoginState(status: FormFailure(StringManager.emailHint)));
+      emit(state.copyWith(status: FormFailure(StringManager.emailHint)));
       return false;
     } else if (password.trim().isEmpty) {
-      emit(LoginState(status: FormFailure(StringManager.passwordHint)));
+      emit(state.copyWith(status: FormFailure(StringManager.passwordHint)));
       return false;
     } else {
       return true;

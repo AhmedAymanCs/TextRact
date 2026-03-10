@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:textract/core/constants/color_manager.dart';
 import 'package:textract/core/constants/font_manager.dart';
+import 'package:textract/core/widgets/custom_button.dart';
+import 'package:textract/core/widgets/cutom_form_field.dart';
+import 'package:textract/features/profile/data/models/update_model.dart';
+import 'package:textract/features/profile/logic/cubit.dart';
+import 'package:textract/features/profile/logic/state.dart';
 
 class ProfileAvatar extends StatelessWidget {
   final String? imageUrl;
@@ -138,6 +144,47 @@ class ProfileActionButton extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class EditProfileDialog extends StatefulWidget {
+  final ProfileCubit cubit;
+  const EditProfileDialog({super.key, required this.cubit});
+
+  @override
+  State<EditProfileDialog> createState() => _EditProfileDialogState();
+}
+
+class _EditProfileDialogState extends State<EditProfileDialog> {
+  late TextEditingController _nameController;
+  @override
+  void initState() {
+    _nameController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          CustomFormField(hint: 'New Name', controller: _nameController),
+          CustomButton(
+            text: 'Update',
+            onPressed: () => widget.cubit.updateUserData(
+              UpdateModel(name: _nameController.text),
+            ),
+          ),
+        ],
       ),
     );
   }

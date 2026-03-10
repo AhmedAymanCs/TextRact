@@ -40,6 +40,16 @@ class ProfileDataSourceImpl implements ProfileDataSource {
 
   @override
   Future<void> updateUserData(UpdateModel data) async {
+    final userSessionjson = await secureStorageHelper.getData(
+      key: AppConstants.userSession,
+    );
+    if (userSessionjson != null) {
+      final userSession = jsonDecode(userSessionjson);
+      userSession['name'] = data.name;
+      userSession['image'] = data.image;
+      await secureStorageHelper.deleteData(key: AppConstants.userSession);
+      await secureStorageHelper.saveUserData(jsonEncode(userSession));
+    }
     await firestore
         .collection(AppConstants.usersCollectionName)
         .doc(auth.currentUser!.uid)

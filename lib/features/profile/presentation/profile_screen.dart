@@ -38,7 +38,12 @@ class ProfilePage extends StatelessWidget {
                   ProfileActionButton(
                     icon: Icons.edit_rounded,
                     label: 'Edit Profile',
-                    onTap: () {},
+                    onTap: () => showDialog(
+                      context: context,
+                      builder: (context) => EditProfileDialog(
+                        cubit: ProfileCubit(getIt<ProfileRepository>()),
+                      ),
+                    ),
                   ),
                   SizedBox(height: 12.h),
                   ProfileActionButton(

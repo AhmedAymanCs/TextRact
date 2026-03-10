@@ -19,9 +19,10 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> updateUserData(UpdateModel data) async {
     emit(state.copyWith(status: ProfileStatus.loading));
     final response = await _repository.updateUserData(data);
-    response.fold(
-      (l) => emit(state.copyWith(status: ProfileStatus.error)),
-      (r) => emit(state.copyWith(status: ProfileStatus.success)),
-    );
+    response.fold((l) => emit(state.copyWith(status: ProfileStatus.error)), (
+      r,
+    ) async {
+      await getUserData();
+    });
   }
 }
