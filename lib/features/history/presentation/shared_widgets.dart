@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:textract/core/constants/app_constants.dart';
 import 'package:textract/core/constants/color_manager.dart';
 import 'package:textract/core/constants/font_manager.dart';
 import 'package:textract/core/models/text_form_model.dart';
 
 class HistoryItem extends StatelessWidget {
   final TextFormModel item;
-  const HistoryItem({super.key, required this.item});
+  final VoidCallback? onDelete;
+  const HistoryItem({super.key, required this.item, this.onDelete});
 
   @override
   Widget build(BuildContext context) {
     final String formatted = DateFormat(
-      'dd MMM yyyy - hh:mm a',
+      AppConstants.DateTimeFormat,
     ).format(item.createdAt);
     return Container(
       padding: const EdgeInsets.all(16),
@@ -41,11 +43,20 @@ class HistoryItem extends StatelessWidget {
             ],
           ),
           const Divider(height: 20),
-          Text(
-            item.text,
-            style: const TextStyle(fontSize: 14),
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
+          Row(
+            children: [
+              Text(
+                item.text,
+                style: const TextStyle(fontSize: 14),
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const Spacer(),
+              IconButton(
+                onPressed: onDelete,
+                icon: Icon(Icons.delete_outline, color: ColorManager.error),
+              ),
+            ],
           ),
         ],
       ),

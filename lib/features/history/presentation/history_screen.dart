@@ -41,7 +41,6 @@ class HistoryPage extends StatelessWidget {
                   child: CustomFormField(
                     hint: StringManager.search,
                     preicon: Icons.search_rounded,
-                    // controller: _searchController,
                     onChanged: (value) {
                       context.read<HistoryCubit>().searchText(value!);
                     },
@@ -53,7 +52,12 @@ class HistoryPage extends StatelessWidget {
                     itemCount: texts.length,
                     separatorBuilder: (_, _) => const SizedBox(height: 12),
                     itemBuilder: (context, index) {
-                      return HistoryItem(item: texts[index]);
+                      return HistoryItem(
+                        item: texts[index],
+                        onDelete: () => context.read<HistoryCubit>().deleteText(
+                          texts[index].id,
+                        ),
+                      );
                     },
                   ),
                 ),

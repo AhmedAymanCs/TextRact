@@ -31,11 +31,10 @@ class HistoryCubit extends Cubit<HistoryState> {
   }
 
   void deleteText(String id) async {
-    emit(state.copyWith(status: HistoryStatus.loading));
     final response = await _repository.deleteTextFromDatabase(id);
     response.fold(
       (l) => emit(state.copyWith(status: HistoryStatus.error)),
-      (r) => getTextFromDatabase,
+      (r) => getTextFromDatabase(),
     );
   }
 }
