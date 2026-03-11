@@ -9,10 +9,9 @@ class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit(this._repository) : super(const ProfileState());
 
   Future<void> pickImage(ImageSource source) async {
-    // emit(state.copyWith(status: const HomeLoading()));
     final pickedImage = await _repository.pickImage(source);
     pickedImage.fold(
-      (l) => emit(state.copyWith(status: ProfileStatus.error)),
+      (l) => emit(state.copyWith(status: ProfileStatus.error, error: l)),
       (r) => emit(state.copyWith(file: r)),
     );
   }
@@ -21,7 +20,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(state.copyWith(status: ProfileStatus.loading));
     final response = await _repository.getUserData();
     response.fold(
-      (l) => emit(state.copyWith(status: ProfileStatus.error)),
+      (l) => emit(state.copyWith(status: ProfileStatus.error, error: l)),
       (r) => emit(state.copyWith(user: r, status: ProfileStatus.success)),
     );
   }
@@ -29,10 +28,12 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> updateUserData(UpdateModel data) async {
     emit(state.copyWith(status: ProfileStatus.loading));
     final response = await _repository.updateUserData(data);
-    response.fold((l) => emit(state.copyWith(status: ProfileStatus.error)), (
-      r,
-    ) async {
-      await getUserData();
-    });
+    response.fold(
+      (l) => emit(state.copyWith(status: ProfileStatus.error, error: l)),
+      (r) async {
+        await getUserData();
+        emit(state.copyWith(status: ProfileStatus.updated));
+      },
+    );
   }
 }

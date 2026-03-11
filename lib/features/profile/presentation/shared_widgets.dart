@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:textract/core/constants/color_manager.dart';
 import 'package:textract/core/constants/font_manager.dart';
@@ -180,9 +181,36 @@ class _EditProfileDialogState extends State<EditProfileDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProfileCubit, ProfileState>(
+    return BlocConsumer<ProfileCubit, ProfileState>(
       bloc: widget.cubit,
+      listener: (context, state) {
+        if (state.status == ProfileStatus.updated) {
+          Navigator.of(context).pop();
+          Fluttertoast.showToast(
+            msg: StringManager.profileUpdated,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: ColorManager.green,
+            textColor: ColorManager.backgroundLight,
+            fontSize: 16.0,
+          );
+        }
+        if (state.status == ProfileStatus.error) {
+          Fluttertoast.showToast(
+            msg: StringManager.checkYourInternet,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: ColorManager.red,
+            textColor: ColorManager.backgroundLight,
+            fontSize: 16.0,
+          );
+        }
+      },
       builder: (context, state) {
+        if (state.status == ProfileStatus.loading) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
         return Dialog(
           child: Column(
             mainAxisSize: MainAxisSize.min,
