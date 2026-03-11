@@ -75,7 +75,7 @@ class AppTheme {
     ),
     scaffoldBackgroundColor: ColorManager.backgroundDark,
     appBarTheme: const AppBarTheme(
-      backgroundColor: ColorManager.backgroundSlate,
+      backgroundColor: ColorManager.backgroundDark,
       elevation: 0,
       iconTheme: IconThemeData(color: ColorManager.textLight),
       titleTextStyle: TextStyle(
