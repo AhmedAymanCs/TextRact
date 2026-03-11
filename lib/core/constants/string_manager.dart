@@ -36,4 +36,7 @@ class StringManager {
 
   //profile
   static const String profileUpdated = 'Profile Updated';
+  static const String notFound = 'Not Found';
+  static const String editProfile = 'Edit Profile';
+  static const String logout = 'Logout';
 }

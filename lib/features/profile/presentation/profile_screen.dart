@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:textract/core/constants/color_manager.dart';
+import 'package:textract/core/constants/string_manager.dart';
 import 'package:textract/core/di/service_locator.dart';
 import 'package:textract/core/router/routes.dart';
 import 'package:textract/features/profile/data/repository/repo.dart';
@@ -18,7 +19,7 @@ class ProfilePage extends StatelessWidget {
       create: (context) =>
           ProfileCubit(getIt<ProfileRepository>())..getUserData(),
       child: Scaffold(
-        appBar: AppBar(title: const Text('Profile')),
+        appBar: AppBar(title: const Text(StringManager.profile)),
         body: BlocConsumer<ProfileCubit, ProfileState>(
           listener: (context, state) {
             if (state.status == ProfileStatus.logout) {
@@ -39,17 +40,17 @@ class ProfilePage extends StatelessWidget {
                 children: [
                   ProfileAvatar(
                     imageUrl: state.user.image == '' ? null : state.user.image,
-                    name: state.user.name ?? 'Not Found',
+                    name: state.user.name ?? StringManager.notFound,
                   ),
                   SizedBox(height: 24.h),
                   ProfileInfoCard(
-                    name: state.user.name ?? 'Not Found',
-                    email: state.user.email ?? 'Not Found',
+                    name: state.user.name ?? StringManager.notFound,
+                    email: state.user.email ?? StringManager.notFound,
                   ),
-                  SizedBox(height: 16.h),
+                  SizedBox(height: 15.h),
                   ProfileActionButton(
                     icon: Icons.edit_rounded,
-                    label: 'Edit Profile',
+                    label: StringManager.editProfile,
                     onTap: () {
                       final cubit = context.read<ProfileCubit>();
                       showDialog(
@@ -61,7 +62,7 @@ class ProfilePage extends StatelessWidget {
                   SizedBox(height: 12.h),
                   ProfileActionButton(
                     icon: Icons.logout_rounded,
-                    label: 'Logout',
+                    label: StringManager.logout,
                     color: ColorManager.red,
                     onTap: () => context.read<ProfileCubit>().logout(),
                   ),
