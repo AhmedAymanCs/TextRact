@@ -36,7 +36,7 @@ class HomeDataSourceImpl implements HomeDataSource {
         .collection(AppConstants.usersCollectionName)
         .doc(_auth.currentUser!.uid)
         .collection(AppConstants.databaseCollectionName)
-        .doc(DateTime.now().toIso8601String())
+        .doc(text.id)
         .set(text.toJson());
   }
 }

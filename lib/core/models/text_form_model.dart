@@ -1,4 +1,5 @@
 class TextFormModel {
+  final String id;
   final String text;
   final String source;
   final DateTime createdAt;
@@ -6,6 +7,7 @@ class TextFormModel {
     required this.text,
     required this.source,
     required this.createdAt,
+    required this.id,
   });
 
   factory TextFormModel.fromjson(Map<String, dynamic> json) {
@@ -13,6 +15,7 @@ class TextFormModel {
       text: json['text'] ?? 'Not Found',
       source: json['source'] ?? 'Not Found',
       createdAt: DateTime.parse(json['createdAt']),
+      id: json['id'] ?? 'null',
     );
   }
 
@@ -21,6 +24,7 @@ class TextFormModel {
       'text': text,
       'source': source,
       'createdAt': createdAt.toIso8601String(),
+      'id': id,
     };
   }
 }

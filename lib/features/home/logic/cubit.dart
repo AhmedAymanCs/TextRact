@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:textract/core/models/text_form_model.dart';
 import 'package:textract/features/home/data/repository/repo.dart';
 import 'package:textract/features/home/logic/state.dart';
+import 'package:uuid/v4.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   final HomeRepository _repository;
@@ -47,6 +48,7 @@ class HomeCubit extends Cubit<HomeState> {
   void saveTextInDatabase() {
     _repository.saveTextInDatabase(
       TextFormModel(
+        id: UuidV4().generate(),
         text: state.textExtracted,
         source: state.source == '' ? 'Not Found' : state.source,
         createdAt: DateTime.now(),
