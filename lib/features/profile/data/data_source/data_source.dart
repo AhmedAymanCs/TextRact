@@ -15,6 +15,7 @@ abstract class ProfileDataSource {
   // remote
   Future<UserModel> getUserData();
   Future<void> updateUserData(UpdateModel data);
+  Future<void> logout();
 }
 
 class ProfileDataSourceImpl implements ProfileDataSource {
@@ -83,5 +84,12 @@ class ProfileDataSourceImpl implements ProfileDataSource {
         .collection(AppConstants.usersCollectionName)
         .doc(auth.currentUser!.uid)
         .update(data.toJson(imageUrl: urlImage));
+  }
+
+  @override
+  Future<void> logout() async {
+    await auth.signOut().then((_) {
+      secureStorageHelper.deleteData(key: AppConstants.userSession);
+    });
   }
 }

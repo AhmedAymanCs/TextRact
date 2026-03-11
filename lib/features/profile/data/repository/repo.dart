@@ -11,6 +11,7 @@ abstract class ProfileRepository {
   //remote
   ServerResponse<UserModel> getUserData();
   ServerResponse<Unit> updateUserData(UpdateModel data);
+  ServerResponse<Unit> logout();
 }
 
 class ProfileRepositoryImpl implements ProfileRepository {
@@ -43,6 +44,16 @@ class ProfileRepositoryImpl implements ProfileRepository {
   ServerResponse<Unit> updateUserData(UpdateModel data) async {
     try {
       await _dataSource.updateUserData(data);
+      return Right(unit);
+    } catch (e) {
+      return Left(e.toString());
+    }
+  }
+
+  @override
+  ServerResponse<Unit> logout() async {
+    try {
+      await _dataSource.logout();
       return Right(unit);
     } catch (e) {
       return Left(e.toString());

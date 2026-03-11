@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:textract/core/models/user_model.dart';
 
-enum ProfileStatus { initial, loading, success, error, updated }
+enum ProfileStatus { initial, loading, success, error, updated, logout }
 
 class ProfileState extends Equatable {
   final ProfileStatus status;

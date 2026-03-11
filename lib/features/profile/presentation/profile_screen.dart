@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:textract/core/constants/color_manager.dart';
 import 'package:textract/core/di/service_locator.dart';
+import 'package:textract/core/router/routes.dart';
 import 'package:textract/features/profile/data/repository/repo.dart';
 import 'package:textract/features/profile/logic/cubit.dart';
 import 'package:textract/features/profile/logic/state.dart';
@@ -19,8 +20,19 @@ class ProfilePage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(title: const Text('Profile')),
         body: BlocConsumer<ProfileCubit, ProfileState>(
-          listener: (context, state) {},
+          listener: (context, state) {
+            if (state.status == ProfileStatus.logout) {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                Routes.login,
+                (_) => false,
+              );
+            }
+          },
           builder: (context, state) {
+            if (state.status == ProfileStatus.loading) {
+              return const Center(child: CircularProgressIndicator());
+            }
             return SingleChildScrollView(
               padding: const EdgeInsets.all(25),
               child: Column(
@@ -51,7 +63,7 @@ class ProfilePage extends StatelessWidget {
                     icon: Icons.logout_rounded,
                     label: 'Logout',
                     color: ColorManager.red,
-                    onTap: () {},
+                    onTap: () => context.read<ProfileCubit>().logout(),
                   ),
                 ],
               ),
