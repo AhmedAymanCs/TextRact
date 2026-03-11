@@ -14,4 +14,19 @@ class HistoryCubit extends Cubit<HistoryState> {
       (r) => emit(state.copyWith(status: HistoryStatus.success, texts: r)),
     );
   }
+
+  void searchText(String text) {
+    emit(state.copyWith(status: HistoryStatus.search));
+    emit(
+      state.copyWith(
+        searchTexts: state.texts
+            .where(
+              (e) =>
+                  e.text.toLowerCase().contains(text.toLowerCase()) ||
+                  e.createdAt.toString().contains(text),
+            )
+            .toList(),
+      ),
+    );
+  }
 }

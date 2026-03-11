@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:textract/core/constants/string_manager.dart';
 import 'package:textract/core/di/service_locator.dart';
+import 'package:textract/core/models/text_form_model.dart';
+import 'package:textract/core/widgets/cutom_form_field.dart';
 import 'package:textract/features/history/data/repository/repo.dart';
 import 'package:textract/features/history/logic/cubit.dart';
 import 'package:textract/features/history/logic/state.dart';
@@ -15,23 +18,46 @@ class HistoryPage extends StatelessWidget {
       create: (context) =>
           HistoryCubit(getIt<HistoryRepository>())..getTextFromDatabase(),
       child: Scaffold(
-        appBar: AppBar(title: const Text('History')),
+        appBar: AppBar(title: Text(StringManager.history)),
         body: BlocBuilder<HistoryCubit, HistoryState>(
           builder: (context, state) {
+            late List<TextFormModel> texts;
             if (state.status == HistoryStatus.loading) {
               return const Center(child: CircularProgressIndicator());
             }
             if (state.texts.isEmpty) {
-              return const Center(child: Text('No history yet'));
+              return const Center(child: Text(StringManager.emptyHistory));
             }
-            return ListView.separated(
-              padding: const EdgeInsets.all(16),
-              itemCount: state.texts.length,
-              separatorBuilder: (_, _) => const SizedBox(height: 12),
-              itemBuilder: (context, index) {
-                final item = state.texts[index];
-                return HistoryItem(item: item);
-              },
+            if (state.status == HistoryStatus.search) {
+              texts = state.searchTexts;
+            } else {
+              texts = state.texts;
+            }
+
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: CustomFormField(
+                    hint: StringManager.search,
+                    preicon: Icons.search_rounded,
+                    // controller: _searchController,
+                    onChanged: (value) {
+                      context.read<HistoryCubit>().searchText(value!);
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: ListView.separated(
+                    padding: const EdgeInsets.all(15),
+                    itemCount: texts.length,
+                    separatorBuilder: (_, _) => const SizedBox(height: 12),
+                    itemBuilder: (context, index) {
+                      return HistoryItem(item: texts[index]);
+                    },
+                  ),
+                ),
+              ],
             );
           },
         ),

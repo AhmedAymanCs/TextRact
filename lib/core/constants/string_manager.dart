@@ -30,7 +30,7 @@ class StringManager {
   static const String camera = 'Camera';
   static const String gallery = 'Gallery';
   static const String extract = 'Extract';
-  static const String history = 'History';
+
   static const String profile = 'Profile';
   static const String notextracted = 'No text extracted';
 
@@ -39,4 +39,9 @@ class StringManager {
   static const String notFound = 'Not Found';
   static const String editProfile = 'Edit Profile';
   static const String logout = 'Logout';
+
+  //history
+  static const String history = 'History';
+  static const String search = 'Search';
+  static const String emptyHistory = 'No history found';
 }
