@@ -13,14 +13,11 @@ class HistoryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String formatted = DateFormat(
-      AppConstants.DateTimeFormat,
+      AppConstants.dateTimeFormat,
     ).format(item.createdAt);
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: ColorManager.backgroundGray,
-        borderRadius: BorderRadius.circular(12),
-      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

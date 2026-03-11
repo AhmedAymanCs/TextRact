@@ -57,10 +57,7 @@ class ProfileInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: ColorManager.backgroundGray,
-        borderRadius: BorderRadius.circular(12),
-      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
       child: Column(
         children: [
           ProfileInfoRow(
@@ -128,20 +125,17 @@ class ProfileActionButton extends StatelessWidget {
       borderRadius: BorderRadius.circular(12),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        decoration: BoxDecoration(
-          color: ColorManager.backgroundGray,
-          borderRadius: BorderRadius.circular(12),
-        ),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
         child: Row(
           children: [
-            Icon(icon, color: color ?? ColorManager.textDark),
+            Icon(icon, color: color),
             const SizedBox(width: 12),
             Text(
               label,
               style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeightManager.medium,
-                color: color ?? ColorManager.textDark,
+                color: color,
               ),
             ),
             const Spacer(),

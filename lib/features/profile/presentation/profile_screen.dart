@@ -5,6 +5,7 @@ import 'package:textract/core/constants/color_manager.dart';
 import 'package:textract/core/constants/string_manager.dart';
 import 'package:textract/core/di/service_locator.dart';
 import 'package:textract/core/router/routes.dart';
+import 'package:textract/core/theme/cubit/cubit.dart';
 import 'package:textract/features/profile/data/repository/repo.dart';
 import 'package:textract/features/profile/logic/cubit.dart';
 import 'package:textract/features/profile/logic/state.dart';
@@ -19,7 +20,15 @@ class ProfilePage extends StatelessWidget {
       create: (context) =>
           ProfileCubit(getIt<ProfileRepository>())..getUserData(),
       child: Scaffold(
-        appBar: AppBar(title: const Text(StringManager.profile)),
+        appBar: AppBar(
+          title: const Text(StringManager.profile),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.dark_mode_outlined),
+              onPressed: () => context.read<ThemeCubit>().toggleTheme(),
+            ),
+          ],
+        ),
         body: BlocConsumer<ProfileCubit, ProfileState>(
           listener: (context, state) {
             if (state.status == ProfileStatus.logout) {
