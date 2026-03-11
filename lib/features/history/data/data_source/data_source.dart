@@ -5,6 +5,7 @@ import 'package:textract/core/models/text_form_model.dart';
 
 abstract class HistoryDataSource {
   Future<List<TextFormModel>> getTextFromDatabase();
+  Future<void> deleteTextFromDatabase(String id);
 }
 
 class HistoryDataSourceImpl implements HistoryDataSource {
@@ -20,5 +21,15 @@ class HistoryDataSourceImpl implements HistoryDataSource {
         .collection(AppConstants.databaseCollectionName)
         .get();
     return response.docs.map((e) => TextFormModel.fromjson(e.data())).toList();
+  }
+
+  @override
+  Future<void> deleteTextFromDatabase(String id) async {
+    await _firestore
+        .collection(AppConstants.usersCollectionName)
+        .doc(_auth.currentUser!.uid)
+        .collection(AppConstants.databaseCollectionName)
+        .doc(id)
+        .delete();
   }
 }

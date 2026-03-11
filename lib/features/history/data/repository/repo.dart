@@ -5,6 +5,7 @@ import 'package:textract/features/history/data/data_source/data_source.dart';
 
 abstract class HistoryRepository {
   ServerResponse<List<TextFormModel>> getTextFromDatabase();
+  ServerResponse<Unit> deleteTextFromDatabase(String id);
 }
 
 class HistoryRepositoryImpl implements HistoryRepository {
@@ -15,6 +16,16 @@ class HistoryRepositoryImpl implements HistoryRepository {
     try {
       final response = await _dataSource.getTextFromDatabase();
       return Right(response);
+    } catch (e) {
+      return Left(e.toString());
+    }
+  }
+
+  @override
+  ServerResponse<Unit> deleteTextFromDatabase(String id) async {
+    try {
+      await _dataSource.deleteTextFromDatabase(id);
+      return Right(unit);
     } catch (e) {
       return Left(e.toString());
     }
