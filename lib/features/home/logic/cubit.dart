@@ -17,10 +17,10 @@ class HomeCubit extends Cubit<HomeState> {
     emit(state.copyWith(status: const HomeLoading()));
     final pickedImage = await _repository.pickImage(source);
     pickedImage.fold(
-      (l) => emit(state.copyWith(status: HomeError(l))),
-      (r) => emit(
+      (error) => emit(state.copyWith(status: HomeError(error))),
+      (file) => emit(
         state.copyWith(
-          file: r,
+          file: file,
           source: source == ImageSource.camera ? 'Camera' : 'Gallery',
         ),
       ),

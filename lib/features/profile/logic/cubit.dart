@@ -11,8 +11,9 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> pickImage(ImageSource source) async {
     final pickedImage = await _repository.pickImage(source);
     pickedImage.fold(
-      (l) => emit(state.copyWith(status: ProfileStatus.error, error: l)),
-      (r) => emit(state.copyWith(file: r)),
+      (error) =>
+          emit(state.copyWith(status: ProfileStatus.error, error: error)),
+      (file) => emit(state.copyWith(file: file)),
     );
   }
 

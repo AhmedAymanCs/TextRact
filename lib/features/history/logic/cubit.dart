@@ -10,8 +10,11 @@ class HistoryCubit extends Cubit<HistoryState> {
     emit(state.copyWith(status: HistoryStatus.loading));
     final response = await _repository.getTextFromDatabase();
     response.fold(
-      (l) => emit(state.copyWith(status: HistoryStatus.error)),
-      (r) => emit(state.copyWith(status: HistoryStatus.success, texts: r)),
+      (error) => emit(
+        state.copyWith(status: HistoryStatus.error, errorMessage: error),
+      ),
+      (text) =>
+          emit(state.copyWith(status: HistoryStatus.success, texts: text)),
     );
   }
 

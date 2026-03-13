@@ -50,7 +50,7 @@ class HomeError extends HomeStatus {
   final String error;
   const HomeError(this.error);
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [error];
 }
 
 class HomeSuccess extends HomeStatus {
